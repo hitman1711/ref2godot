@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ref2Godot"
+  short_description: "Reference-driven Godot games with editable levels"
+  default_prompt: "Use $ref2godot to turn my visual reference into a playable Godot game with every level saved as an editable .tscn scene."

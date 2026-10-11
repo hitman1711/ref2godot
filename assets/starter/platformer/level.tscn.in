@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1"]
+[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://entities/pickup/pickup.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://entities/exit/exit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="Ground"]
+size = Vector2(960, 40)
+[sub_resource type="RectangleShape2D" id="Ledge"]
+size = Vector2(160, 24)
+[sub_resource type="RectangleShape2D" id="HighLedge"]
+size = Vector2(140, 24)
+[sub_resource type="RectangleShape2D" id="Wall"]
+size = Vector2(32, 540)
+
+[node name="__LEVEL_NAME__" type="Node2D"]
+script = ExtResource("1")
+level_title = "__TITLE__"
+next_level = "__NEXT_SCENE__"
+
+[node name="Background" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 540, 0, 540)
+color = Color(0.06, 0.1, 0.16, 1)
+
+[node name="Terrain" type="Node2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="Terrain"]
+position = Vector2(480, 500)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Ground"]
+shape = SubResource("Ground")
+[node name="Art" type="Polygon2D" parent="Terrain/Ground"]
+polygon = PackedVector2Array(-480, -20, 480, -20, 480, 20, -480, 20)
+color = Color(0.18, 0.27, 0.36, 1)
+
+[node name="Ledge01" type="StaticBody2D" parent="Terrain"]
+position = Vector2(280, 410)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Ledge01"]
+shape = SubResource("Ledge")
+[node name="Art" type="Polygon2D" parent="Terrain/Ledge01"]
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+color = Color(0.24, 0.34, 0.44, 1)
+
+[node name="Ledge02" type="StaticBody2D" parent="Terrain"]
+position = Vector2(510, 330)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Ledge02"]
+shape = SubResource("HighLedge")
+[node name="Art" type="Polygon2D" parent="Terrain/Ledge02"]
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+color = Color(0.24, 0.34, 0.44, 1)
+
+[node name="Ledge03" type="StaticBody2D" parent="Terrain"]
+position = Vector2(740, 410)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Ledge03"]
+shape = SubResource("Ledge")
+[node name="Art" type="Polygon2D" parent="Terrain/Ledge03"]
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+color = Color(0.24, 0.34, 0.44, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Terrain"]
+position = Vector2(0, 270)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/LeftWall"]
+shape = SubResource("Wall")
+[node name="RightWall" type="StaticBody2D" parent="Terrain"]
+position = Vector2(960, 270)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/RightWall"]
+shape = SubResource("Wall")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(90, 460)
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(90, 460)
+
+[node name="Pickups" type="Node2D" parent="."]
+[node name="Diamond01" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(280, 372)
+[node name="Diamond02" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(510, 292)
+[node name="Diamond03" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(740, 372)
+
+[node name="Exit" parent="." instance=ExtResource("4")]
+position = Vector2(875, 448)
+[node name="HUD" parent="." instance=ExtResource("5")]

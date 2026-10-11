@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1"]
+[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://entities/pickup/pickup.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://entities/exit/exit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="Horizontal"]
+size = Vector2(960, 32)
+[sub_resource type="RectangleShape2D" id="Vertical"]
+size = Vector2(32, 540)
+[sub_resource type="RectangleShape2D" id="Obstacle"]
+size = Vector2(64, 150)
+[sub_resource type="RectangleShape2D" id="ShortObstacle"]
+size = Vector2(120, 48)
+
+[node name="__LEVEL_NAME__" type="Node2D"]
+script = ExtResource("1")
+level_title = "__TITLE__"
+next_level = "__NEXT_SCENE__"
+
+[node name="Background" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 960, 0, 960, 540, 0, 540)
+color = Color(0.06, 0.1, 0.16, 1)
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Terrain"]
+position = Vector2(480, 16)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Top"]
+shape = SubResource("Horizontal")
+[node name="Art" type="Polygon2D" parent="Terrain/Top"]
+polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
+color = Color(0.18, 0.27, 0.36, 1)
+
+[node name="Bottom" type="StaticBody2D" parent="Terrain"]
+position = Vector2(480, 524)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Bottom"]
+shape = SubResource("Horizontal")
+[node name="Art" type="Polygon2D" parent="Terrain/Bottom"]
+polygon = PackedVector2Array(-480, -16, 480, -16, 480, 16, -480, 16)
+color = Color(0.18, 0.27, 0.36, 1)
+
+[node name="Left" type="StaticBody2D" parent="Terrain"]
+position = Vector2(16, 270)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Left"]
+shape = SubResource("Vertical")
+[node name="Art" type="Polygon2D" parent="Terrain/Left"]
+polygon = PackedVector2Array(-16, -270, 16, -270, 16, 270, -16, 270)
+color = Color(0.18, 0.27, 0.36, 1)
+
+[node name="Right" type="StaticBody2D" parent="Terrain"]
+position = Vector2(944, 270)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Right"]
+shape = SubResource("Vertical")
+[node name="Art" type="Polygon2D" parent="Terrain/Right"]
+polygon = PackedVector2Array(-16, -270, 16, -270, 16, 270, -16, 270)
+color = Color(0.18, 0.27, 0.36, 1)
+
+[node name="Obstacle" type="StaticBody2D" parent="Terrain"]
+position = Vector2(420, 270)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/Obstacle"]
+shape = SubResource("Obstacle")
+[node name="Art" type="Polygon2D" parent="Terrain/Obstacle"]
+polygon = PackedVector2Array(-32, -75, 32, -75, 32, 75, -32, 75)
+color = Color(0.24, 0.34, 0.44, 1)
+
+[node name="ShortObstacle" type="StaticBody2D" parent="Terrain"]
+position = Vector2(680, 390)
+collision_layer = 1
+collision_mask = 2
+[node name="Collision" type="CollisionShape2D" parent="Terrain/ShortObstacle"]
+shape = SubResource("ShortObstacle")
+[node name="Art" type="Polygon2D" parent="Terrain/ShortObstacle"]
+polygon = PackedVector2Array(-60, -24, 60, -24, 60, 24, -60, 24)
+color = Color(0.24, 0.34, 0.44, 1)
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(120, 270)
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(120, 270)
+
+[node name="Pickups" type="Node2D" parent="."]
+[node name="Diamond01" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(280, 160)
+[node name="Diamond02" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(550, 270)
+[node name="Diamond03" parent="Pickups" instance=ExtResource("3")]
+position = Vector2(780, 170)
+
+[node name="Exit" parent="." instance=ExtResource("4")]
+position = Vector2(860, 270)
+[node name="HUD" parent="." instance=ExtResource("5")]

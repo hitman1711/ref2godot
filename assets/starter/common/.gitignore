@@ -1,0 +1,5 @@
+.godot/
+.DS_Store
+builds/
+qa/*.engine.log
+qa/*.log
